@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Skyline Realty — Find Your Home</title>
+<style>
+  :root { --brand:#1f5f8b; --brand-dark:#154561; --ink:#1b2733; --muted:#6b7c8f; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background:#f5f7fa; }
+
+  header { background: linear-gradient(120deg, var(--brand), var(--brand-dark)); color:#fff; padding: 18px 32px; display:flex; justify-content:space-between; align-items:center; }
+  header .logo { font-size: 22px; font-weight: 700; letter-spacing:.3px; }
+  header nav a { color:#dbe7f1; text-decoration:none; margin-left:22px; font-size:14px; }
+
+  .hero { background: linear-gradient(120deg, var(--brand), var(--brand-dark)); color:#fff; padding: 60px 32px 90px; text-align:center; }
+  .hero h1 { font-size: 40px; margin-bottom: 12px; }
+  .hero p { font-size: 18px; color:#dbe7f1; }
+
+  .listings { max-width: 1100px; margin: -50px auto 60px; padding: 0 20px; display:grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 22px; }
+  .card { background:#fff; border-radius: 14px; overflow:hidden; box-shadow: 0 8px 24px rgba(20,40,60,.08); }
+  .card .photo { height: 160px; background: linear-gradient(135deg,#c9d9e6,#9db6c9); display:flex; align-items:center; justify-content:center; color:#4a6379; font-size: 42px; }
+  .card .body { padding: 16px 18px 20px; }
+  .card h3 { font-size: 17px; margin-bottom: 6px; }
+  .card .price { color: var(--brand); font-weight:700; font-size: 18px; margin: 8px 0; }
+  .card .meta { color: var(--muted); font-size: 13px; }
+
+  /* ---- Chat widget ---- */
+  #chat-bubble { position: fixed; bottom: 24px; right: 24px; width: 62px; height: 62px; border-radius: 50%; background: var(--brand); color:#fff; border:none; font-size: 26px; cursor:pointer; box-shadow: 0 8px 20px rgba(31,95,139,.45); z-index: 1000; }
+  #chat-panel { position: fixed; bottom: 100px; right: 24px; width: 360px; max-width: calc(100vw - 40px); height: 520px; background:#fff; border-radius: 16px; box-shadow: 0 18px 50px rgba(20,40,60,.28); display:none; flex-direction:column; overflow:hidden; z-index: 1000; }
+  #chat-panel.open { display:flex; }
+  .chat-head { background: var(--brand); color:#fff; padding: 14px 16px; display:flex; align-items:center; gap:10px; }
+  .chat-head .avatar { width:34px; height:34px; border-radius:50%; background:#fff; color:var(--brand); display:flex; align-items:center; justify-content:center; font-weight:700; }
+  .chat-head .who small { display:block; opacity:.8; font-size: 11px; font-weight: 400; }
+  .chat-body { flex:1; padding: 14px; overflow-y:auto; background:#f2f5f8; display:flex; flex-direction:column; gap:10px; }
+  .msg { max-width: 82%; padding: 9px 13px; border-radius: 14px; font-size: 14px; line-height: 1.4; }
+  .msg.bot { background:#fff; align-self:flex-start; border-bottom-left-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  .msg.user { background: var(--brand); color:#fff; align-self:flex-end; border-bottom-right-radius:4px; }
+  .msg.typing { color: var(--muted); font-style: italic; }
+  .chat-input { display:flex; border-top:1px solid #e4eaf0; }
+  .chat-input input { flex:1; border:none; padding: 14px; font-size: 14px; outline:none; }
+  .chat-input button { border:none; background: var(--brand); color:#fff; padding: 0 18px; cursor:pointer; font-size:14px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🏙️ Skyline Realty</div>
+  <nav><a href="#">Buy</a><a href="#">Rent</a><a href="#">Sell</a><a href="#">Contact</a><a href="/">▶ View Pitch</a></nav>
+</header>
+
+<section class="hero">
+  <h1>Find a home you'll love</h1>
+  <p>Browse listings — or chat with Ava, our assistant, to get matched instantly.</p>
+</section>
+
+<section class="listings">
+  <div class="card"><div class="photo">🏡</div><div class="body"><h3>Modern 3-Bed Family Home</h3><div class="price">$420,000</div><div class="meta">Oakwood · 3 bd · 2 ba · 1,850 sqft</div></div></div>
+  <div class="card"><div class="photo">🏢</div><div class="body"><h3>Downtown 2-Bed Luxury Apartment</h3><div class="price">$310,000</div><div class="meta">City Center · 2 bd · 2 ba · 1,100 sqft</div></div></div>
+  <div class="card"><div class="photo">🏘️</div><div class="body"><h3>Spacious 4-Bed Suburban House</h3><div class="price">$560,000</div><div class="meta">Greenfield · 4 bd · 3 ba · 2,600 sqft</div></div></div>
+</section>
+
+<!-- Chat widget -->
+<button id="chat-bubble" title="Chat with Ava">💬</button>
+<div id="chat-panel">
+  <div class="chat-head">
+    <div class="avatar">A</div>
+    <div class="who"><strong>Ava</strong><small>Skyline Realty · replies instantly</small></div>
+  </div>
+  <div class="chat-body" id="chat-body"></div>
+  <div class="chat-input">
+    <input id="chat-text" placeholder="Type a message…" autocomplete="off" />
+    <button id="chat-send">Send</button>
+  </div>
+</div>
+
+<script>
+  // A random id so each browser tab is its own conversation.
+  const SESSION_ID = "sess-" + Math.random().toString(36).slice(2);
+  const API = window.location.origin + "/chat";
+
+  const panel = document.getElementById("chat-panel");
+  const body  = document.getElementById("chat-body");
+  const input = document.getElementById("chat-text");
+
+  document.getElementById("chat-bubble").onclick = () => {
+    panel.classList.toggle("open");
+    if (panel.classList.contains("open") && body.children.length === 0) {
+      addMsg("bot", "Hi! I'm Ava from Skyline Realty 👋 Looking to buy? Tell me the area and budget you have in mind and I'll find something for you.");
+    }
+  };
+
+  function addMsg(who, text) {
+    const el = document.createElement("div");
+    el.className = "msg " + who;
+    el.textContent = text;
+    body.appendChild(el);
+    body.scrollTop = body.scrollHeight;
+    return el;
+  }
+
+  async function send() {
+    const text = input.value.trim();
+    if (!text) return;
+    addMsg("user", text);
+    input.value = "";
+    const typing = addMsg("bot typing", "Ava is typing…");
+
+    try {
+      const res = await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ session_id: SESSION_ID, message: text })
+      });
+      const data = await res.json();
+      typing.remove();
+      addMsg("bot", data.reply || "Sorry, something went wrong.");
+    } catch (e) {
+      typing.remove();
+      addMsg("bot", "Connection error — is the server running?");
+    }
+  }
+
+  document.getElementById("chat-send").onclick = send;
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter") send(); });
+</script>
+</body>
+</html>

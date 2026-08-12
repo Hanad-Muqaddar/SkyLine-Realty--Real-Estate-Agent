@@ -1,0 +1,74 @@
+[
+  {
+    "id": "SR-101",
+    "title": "Modern 3-Bed Family Home",
+    "type": "house",
+    "location": "Oakwood",
+    "price": 420000,
+    "beds": 3,
+    "baths": 2,
+    "sqft": 1850,
+    "features": ["garage", "backyard", "renovated kitchen"],
+    "status": "available"
+  },
+  {
+    "id": "SR-102",
+    "title": "Downtown 2-Bed Luxury Apartment",
+    "type": "apartment",
+    "location": "City Center",
+    "price": 310000,
+    "beds": 2,
+    "baths": 2,
+    "sqft": 1100,
+    "features": ["balcony", "gym", "concierge"],
+    "status": "available"
+  },
+  {
+    "id": "SR-103",
+    "title": "Cozy 1-Bed Starter Condo",
+    "type": "condo",
+    "location": "Riverside",
+    "price": 185000,
+    "beds": 1,
+    "baths": 1,
+    "sqft": 650,
+    "features": ["river view", "parking"],
+    "status": "available"
+  },
+  {
+    "id": "SR-104",
+    "title": "Spacious 4-Bed Suburban House",
+    "type": "house",
+    "location": "Greenfield",
+    "price": 560000,
+    "beds": 4,
+    "baths": 3,
+    "sqft": 2600,
+    "features": ["pool", "double garage", "large yard"],
+    "status": "available"
+  },
+  {
+    "id": "SR-105",
+    "title": "3-Bed Townhouse Near Schools",
+    "type": "townhouse",
+    "location": "Oakwood",
+    "price": 375000,
+    "beds": 3,
+    "baths": 2,
+    "sqft": 1600,
+    "features": ["patio", "near schools", "garage"],
+    "status": "available"
+  },
+  {
+    "id": "SR-106",
+    "title": "2-Bed Budget Apartment",
+    "type": "apartment",
+    "location": "Riverside",
+    "price": 220000,
+    "beds": 2,
+    "baths": 1,
+    "sqft": 900,
+    "features": ["parking", "pet friendly"],
+    "status": "available"
+  }
+]
